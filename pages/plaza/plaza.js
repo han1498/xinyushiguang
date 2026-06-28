@@ -78,7 +78,7 @@ Page({
     try {
       const preset = safeGetStorage(STORAGE_KEYS.LEGACY_PRESET, DEFAULT_PRESET.preset)
       const rules = safeGetStorage(STORAGE_KEYS.LEGACY_RULES, DEFAULT_PRESET.promptRules)
-      const identity = preset.identity || "百合花精"
+      const identity = preset.identity || "百合花精灵"
       const boundaries = preset.boundaries || "不输出敏感信息"
 
       const prompt = `用户发了一条动态：${content}，请作为它的${identity}给它写一段温暖的评论。`

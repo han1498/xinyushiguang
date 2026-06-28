@@ -4,7 +4,7 @@
       <view class="preset__title">AI设定</view>
       <view class="field">
         <text class="label">身份</text>
-        <input class="input" value="{{preset.identity}}" data-key="identity" bindinput="onPresetInput" placeholder="百合花精" />
+        <input class="input" value="{{preset.identity}}" data-key="identity" bindinput="onPresetInput" placeholder="百合花精灵" />
       </view>
       <view class="field field--col">
         <text class="label">能力边界</text>
@@ -15,7 +15,7 @@
     <view class="preset__section">
       <view class="preset__title">提示词</view>
       <view class="field field--col">
-        <textarea class="textarea" value="{{promptRules}}" bindinput="onPromptRulesInput" maxlength="{{maxPromptLength}}" placeholder="你是一只活了几百年的小花妖..." />
+        <textarea class="textarea" value="{{promptRules}}" bindinput="onPromptRulesInput" maxlength="{{maxPromptLength}}" placeholder="你是一朵在山谷里生长了很久的百合花精灵..." />
         <text class="char-count">{{promptRules.length}}/{{maxPromptLength}}</text>
       </view>
       <view class="preset__tip">所有AI回复生成前将强制遵循这里的要求。</view>
