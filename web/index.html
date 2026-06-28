@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#789262" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="心语拾光" />
+  <title>心语拾光</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%23789262'/%3E%3Ctext x='64' y='82' font-size='52' text-anchor='middle' fill='white' font-family='serif'%3E✿%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.cn" />
+  <link href="https://fonts.googleapis.cn/css2?family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div id="splash" class="splash">
+  <div class="splash__content">
+    <img class="splash__img splash__img--spin" src="https://i.ibb.co/bgJ2Rkrz/lily-2.png" alt="" />
+  </div>
+</div>
+
+<!-- 登录页面 -->
+<div class="auth-page" id="loginPage" style="display:none;">
+  <div class="auth-bg"></div>
+  <div class="auth-card">
+    <div class="auth-header">
+      <img class="auth-logo" src="https://i.ibb.co/bgJ2Rkrz/lily-2.png" alt="" />
+      <h1 class="auth-title">心语拾光</h1>
+      <p class="auth-subtitle">百合花精陪你记录每一天</p>
+    </div>
+    <div class="auth-form">
+      <input class="auth-input" type="text" id="loginUsername" placeholder="请输入用户名" />
+      <input class="auth-input" type="password" id="loginPassword" placeholder="请输入密码（至少4位）" />
+      <button class="auth-btn" onclick="doLogin()">登录</button>
+      <div class="auth-footer">
+        <span>还没有账号？</span>
+        <a class="auth-link" onclick="showRegister()">立即注册</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 注册页面 -->
+<div class="auth-page" id="registerPage" style="display:none;">
+  <div class="auth-bg"></div>
+  <div class="auth-card">
+    <div class="auth-header">
+      <img class="auth-logo" src="https://i.ibb.co/bgJ2Rkrz/lily-2.png" alt="" />
+      <h1 class="auth-title">创建账号</h1>
+      <p class="auth-subtitle">开启你的心语之旅</p>
+    </div>
+    <div class="auth-form">
+      <input class="auth-input" type="text" id="regUsername" placeholder="设置用户名（至少2个字符）" />
+      <input class="auth-input" type="password" id="regPassword" placeholder="设置密码（至少4位）" />
+      <input class="auth-input" type="password" id="regPassword2" placeholder="请再次输入密码" />
+      <button class="auth-btn" onclick="doRegister()">注册</button>
+      <div class="auth-footer">
+        <span>已有账号？</span>
+        <a class="auth-link" onclick="showLogin()">去登录</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stage" id="stage">
+  <!-- 背景 -->
+  <div class="bg-image" id="bgImage"></div>
+
+  <!-- 顶部心情栏 -->
+  <div class="mood-bar">
+    <div class="top-frame" id="topFrame">
+      <span class="top-frame__emoji" id="topEmoji">(｡•̀ᴗ•́)و</span>
+    </div>
+  </div>
+
+  <!-- 聊天区域 -->
+  <div class="chat-area">
+    <div class="chat-scroll" id="chatScroll">
+      <div id="chatList"></div>
+    </div>
+    <div class="chat-composer">
+      <input
+        class="chat-input"
+        id="chatInput"
+        placeholder="写一句百合花语…"
+        oninput="onInputChange(event)"
+        onkeydown="onInputKeydown(event)"
+      />
+      <button class="chat-send" id="chatSend" onclick="sendMessage()">发送</button>
+    </div>
+  </div>
+
+  <!-- 底部花瓣菜单 -->
+  <div class="flower-menu">
+    <button class="flower-menu__btn" onclick="openPanel('memo')">
+      <div class="flower-icon">
+        <img class="flower-menu__img" src="https://i.ibb.co/Zz7zbVQ7/lily-1.png" alt="" />
+      </div>
+    </button>
+    <button class="flower-menu__btn" onclick="openPanel('plaza')">
+      <div class="flower-icon">
+        <img class="flower-menu__img" src="https://i.ibb.co/bgJ2Rkrz/lily-2.png" alt="" />
+      </div>
+    </button>
+    <button class="flower-menu__btn" onclick="openPanel('mood')">
+      <div class="flower-icon">
+        <img class="flower-menu__img" src="https://i.ibb.co/rRKqS5jt/lily-3.png" alt="" />
+      </div>
+    </button>
+    <button class="flower-menu__btn" onclick="openPanel('settings')">
+      <div class="flower-icon">
+        <img class="flower-menu__img" src="https://i.ibb.co/jvnK10SW/lily-4.png" alt="" />
+      </div>
+    </button>
+  </div>
+
+  <!-- 面板遮罩 -->
+  <div class="panel-mask" id="panelMask" onclick="closePanel()"></div>
+
+  <!-- 面板主体 -->
+  <div class="panel" id="panel">
+    <!-- 面板头部 -->
+    <div class="panel__header">
+      <span class="panel__title" id="panelTitle">功能面板</span>
+      <div class="panel__header-actions">
+        <button class="panel__save" id="panelSaveBtn" onclick="onSavePanelHeader()" style="display:none;">
+          <span class="panel__save-text">保存</span>
+          <span class="save__state" id="presetSaveState"></span>
+        </button>
+        <button class="panel__close" onclick="closePanel()">关闭</button>
+      </div>
+    </div>
+
+    <!-- 面板内容 -->
+    <div class="panel__body" id="panelBody"></div>
+  </div>
+
+  <!-- 编辑弹窗 -->
+  <div class="edit-mask" id="editMask" onclick="onEditCancel()" style="display:none;">
+    <div class="edit-card" onclick="event.stopPropagation()">
+      <div class="edit-head">
+        <span class="edit-title">编辑回复</span>
+        <button class="edit-close" onclick="onEditCancel()">关闭</button>
+      </div>
+      <textarea class="edit-textarea" id="editTextarea" placeholder="修改这段回复…"></textarea>
+      <div class="edit-actions">
+        <button class="edit-btn edit-btn--ghost" onclick="onEditCancel()">取消</button>
+        <button class="edit-btn" onclick="onEditSave()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 夸奖弹窗 -->
+  <div class="praise-mask" id="praiseMask" style="display:none;">
+    <div class="praise-card" onclick="event.stopPropagation()">
+      <span class="praise-emoji">🌿</span>
+      <span class="praise-text" id="praiseText"></span>
+      <button class="praise-close" onclick="closePraiseDialog()">开心～</button>
+    </div>
+  </div>
+
+  <!-- 通用弹窗（输入/确认） -->
+  <div class="dialog-mask" id="dialogMask" onclick="onDialogCancel()" style="display:none;">
+    <div class="dialog-card" onclick="event.stopPropagation()">
+      <div class="dialog-head">
+        <span class="dialog-title" id="dialogTitle">提示</span>
+      </div>
+      <div class="dialog-body">
+        <div class="dialog-text" id="dialogText"></div>
+        <input class="dialog-input" id="dialogInput" style="display:none;" placeholder="" />
+      </div>
+      <div class="dialog-actions">
+        <button class="dialog-btn dialog-btn--ghost" id="dialogCancelBtn" onclick="onDialogCancel()">取消</button>
+        <button class="dialog-btn" id="dialogConfirmBtn" onclick="onDialogConfirm()">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提醒弹窗 -->
+  <div class="reminder-mask" id="reminderMask" onclick="onReminderPopupClose()" style="display:none;">
+    <div class="reminder-popup" onclick="event.stopPropagation()">
+      <div class="reminder-popup__head">
+        <span class="reminder-popup__emoji">🔔</span>
+        <span class="reminder-popup__title">时间到啦～</span>
+      </div>
+      <div class="reminder-popup__body">
+        <span class="reminder-popup__content" id="reminderPopupContent"></span>
+        <span class="reminder-popup__time" id="reminderPopupTime"></span>
+      </div>
+      <div class="reminder-popup__actions">
+        <button class="reminder-popup__btn reminder-popup__btn--ghost" onclick="onReminderPopupClose()">知道了</button>
+        <button class="reminder-popup__btn" onclick="onReminderPopupDone()">已完成</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑待办弹窗 -->
+  <div class="todo-edit-mask" id="todoEditMask" onclick="onTodoEditCancel()" style="display:none;">
+    <div class="todo-edit-card" onclick="event.stopPropagation()">
+      <div class="todo-edit__head">
+        <span class="todo-edit__title">编辑待办</span>
+      </div>
+      <div class="todo-edit__body">
+        <input class="todo-edit-input" id="editTodoContent" placeholder="待办内容..." maxlength="50" />
+        <div class="todo-edit-row">
+          <span class="todo-edit-label">时段</span>
+          <select class="todo-edit-select" id="editTodoTimeOfDay" onchange="onEditTodoTimeChange(this)">
+            <option value="">无</option>
+            <option value="早上">早上</option>
+            <option value="上午">上午</option>
+            <option value="中午">中午</option>
+            <option value="下午">下午</option>
+            <option value="晚上">晚上</option>
+            <option value="自定义">自定义时间</option>
+          </select>
+          <input type="time" class="todo-edit-time" id="editTodoCustomTime" style="display:none;" />
+        </div>
+        <div class="todo-edit-row">
+          <span class="todo-edit-label">有效期</span>
+          <select class="todo-edit-select" id="editTodoExpire" onchange="onEditTodoExpireChange(this)">
+            <option value="permanent">永久</option>
+            <option value="3days">3天</option>
+            <option value="7days">7天</option>
+            <option value="custom">自定义日期</option>
+          </select>
+          <input type="date" class="todo-edit-date" id="editTodoExpireDate" style="display:none;" />
+        </div>
+        <div class="todo-edit-row">
+          <span class="todo-edit-label">🔔 提醒</span>
+          <select class="todo-edit-select" id="editTodoReminder" onchange="onEditTodoReminderChange(this)">
+            <option value="">不提醒</option>
+            <option value="same">准时提醒</option>
+            <option value="5min">提前5分钟</option>
+            <option value="15min">提前15分钟</option>
+            <option value="30min">提前30分钟</option>
+            <option value="1hour">提前1小时</option>
+            <option value="custom">自定义时间</option>
+          </select>
+          <input type="time" class="todo-edit-time" id="editTodoReminderTime" style="display:none;" />
+        </div>
+      </div>
+      <div class="todo-edit__actions">
+        <button class="todo-edit__btn todo-edit__btn--ghost" onclick="onTodoEditCancel()">取消</button>
+        <button class="todo-edit__btn" onclick="onTodoEditSave()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<view class="page">
+  <view class="memo__tabs">
+    <view class="memo__tab {{activeTab === 'memory' ? 'memo__tab--active' : ''}}" data-tab="memory" bindtap="onTabChange">
+      <text class="memo__tab-label">记忆</text>
+      <text wx:if="{{badgeCounts.memory > 0}}" class="memo__badge">{{badgeCounts.memory}}</text>
+    </view>
+    <view class="memo__tab {{activeTab === 'event' ? 'memo__tab--active' : ''}}" data-tab="event" bindtap="onTabChange">
+      <text class="memo__tab-label">日历</text>
+      <text wx:if="{{badgeCounts.event > 0}}" class="memo__badge">{{badgeCounts.event}}</text>
+    </view>
+    <view class="memo__tab {{activeTab === 'reminder' ? 'memo__tab--active' : ''}}" data-tab="reminder" bindtap="onTabChange">
+      <text class="memo__tab-label">提醒</text>
+      <text wx:if="{{badgeCounts.reminder > 0}}" class="memo__badge">{{badgeCounts.reminder}}</text>
+    </view>
+    <view class="memo__tab {{activeTab === 'persona' ? 'memo__tab--active' : ''}}" data-tab="persona" bindtap="onTabChange">
+      <text class="memo__tab-label">契约书</text>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'memory'}}" class="memo__body">
+    <view class="memo__items">
+      <view wx:for="{{memoryItems}}" wx:key="id" class="memo__item">
+        <view class="memo__item-head">
+          <text class="memo__item-cat memo__item-cat--{{item.category || 'personal'}}">{{item.category || 'personal'}}</text>
+          <text class="memo__item-time">{{item.timeText}}</text>
+        </view>
+        <text class="memo__item-text">{{item.content}}</text>
+        <view class="memo__item-del" data-id="{{item.id}}" bindtap="onDeleteMemory">删除</view>
+      </view>
+      <view wx:if="{{memoryItems.length === 0}}" class="memo__empty">AI还在学习中，暂无提取的记忆</view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'event'}}" class="memo__body memo__body--scroll">
+    <view class="calendar-wrap">
+      <view class="calendar__bar">
+        <view class="calendar__btn" bindtap="onPrevMonth">‹</view>
+        <text class="calendar__title">{{monthTitle}}</text>
+        <view class="calendar__bar-right">
+          <view class="calendar__btn calendar__btn--sm" bindtap="onToggleCalendar">{{calendarVisible ? '▲' : '▼'}}</view>
+          <view class="calendar__btn" bindtap="onNextMonth">›</view>
+        </view>
+      </view>
+      <view wx:if="{{calendarVisible}}" class="calendar">
+        <view class="calendar__week">
+          <text wx:for="{{weekLabels}}" wx:key="*this" class="calendar__wk">{{item}}</text>
+        </view>
+        <view class="calendar__grid">
+          <view
+            wx:for="{{calendarCells}}"
+            wx:key="index"
+            class="calendar__cell {{item.inMonth ? '' : 'calendar__cell--dim'}} {{item.selected ? 'calendar__cell--selected' : ''}}"
+            data-date="{{item.date}}"
+            bindtap="onSelectDate"
+          >
+            <text class="calendar__day">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="memo__section-title">AI提取的日历事件</view>
+    <view class="memo__items">
+      <view wx:for="{{calendarEvents}}" wx:key="id" class="memo__item">
+        <view class="memo__item-head">
+          <text class="memo__item-cat memo__item-cat--{{item.isToday ? 'today' : (item.isPast ? 'past' : 'event')}}">{{item.isToday ? '今天' : (item.isPast ? '已过' : '待办')}}</text>
+          <text class="memo__item-date">{{item.date}} {{item.time || ''}}</text>
+        </view>
+        <text class="memo__item-text">{{item.title}}</text>
+        <view class="memo__item-del" data-id="{{item.id}}" bindtap="onDeleteEvent">删除</view>
+      </view>
+      <view wx:if="{{calendarEvents.length === 0}}" class="memo__empty">暂无AI提取的日历事件</view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'reminder'}}" class="memo__body">
+    <view class="memo__items">
+      <view wx:for="{{reminderList}}" wx:key="id" class="memo__item {{item.done ? 'memo__item--done' : ''}}">
+        <view class="memo__item-head">
+          <text class="memo__item-cat memo__item-cat--{{item.isPast ? 'past' : 'reminder'}}">{{item.isPast ? '已完成' : '待提醒'}}</text>
+          <text class="memo__item-date">{{item.dateTime || item.timeText}}</text>
+        </view>
+        <view class="memo__item-row">
+          <view class="memo__item-check {{item.done ? 'memo__item-check--on' : ''}}" data-id="{{item.id}}" bindtap="onReminderToggle"></view>
+          <text class="memo__item-text memo__item-text--flex">{{item.content}}</text>
+        </view>
+        <view class="memo__item-del" data-id="{{item.id}}" bindtap="onDeleteReminder">删除</view>
+      </view>
+      <view wx:if="{{reminderList.length === 0}}" class="memo__empty">暂无提醒事项</view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'persona'}}" class="memo__body memo__body--scroll">
+    <view class="form">
+      <view class="field">
+        <text class="label">姓名</text>
+        <input class="input" value="{{profile.name}}" data-key="name" bindinput="onProfileInput" placeholder="你的名字" />
+      </view>
+      <view class="field">
+        <text class="label">生日</text>
+        <picker mode="date" value="{{profile.birthday}}" bindchange="onProfileBirthdayChange">
+          <view class="picker">{{profile.birthday ? profile.birthday : '选择生日'}}</view>
+        </picker>
+      </view>
+      <view class="field field--col">
+        <text class="label">性格</text>
+        <textarea class="textarea" value="{{profile.personality}}" data-key="personality" bindinput="onProfileInput" placeholder="比如：喜欢简洁、需要鼓励…" />
+      </view>
+      <view class="save" bindtap="onSaveProfile">保存档案</view>
+    </view>
+
+    <view class="form">
+      <view class="field field--col">
+        <text class="label">AI记忆</text>
+        <textarea class="textarea textarea--memory" value="{{aiConfig.persona}}" bindinput="onAiConfigInput" placeholder="从聊天记录中提取关键信息，将自动沉淀为AI记忆…" />
+      </view>
+      <view class="save" bindtap="onSaveAiConfig">保存记忆</view>
+    </view>
+
+    <view class="history">
+      <view class="history__title">历史对话</view>
+      <view class="history__list">
+        <view wx:for="{{dayGroups}}" wx:for-item="day" wx:key="date" class="day-group">
+          <view class="day-group__head" data-date="{{day.date}}" bindtap="onToggleDay">
+            <view class="day-group__head-left">
+              <text class="day-group__arrow {{day.expanded ? 'day-group__arrow--open' : ''}}">▶</text>
+              <text class="day-group__date">{{day.date}}</text>
+              <text class="day-group__count">{{day.list.length}}条</text>
+            </view>
+            <view class="day-group__head-right">
+              <view class="day-group__del" data-date="{{day.date}}" catchtap="onDeleteDay">删除</view>
+            </view>
+          </view>
+          <view wx:if="{{day.expanded}}" class="day-group__body">
+            <view wx:for="{{day.list}}" wx:for-item="msg" wx:key="id" class="day-group__msg">
+              <view class="day-group__msg-meta">
+                <text class="day-group__msg-role {{msg.role === 'assistant' ? 'day-group__msg-role--ai' : ''}}">{{msg.role === 'user' ? '你' : '百合精灵'}}</text>
+                <text class="day-group__msg-time">{{msg.timeText}}</text>
+              </view>
+              <text class="day-group__msg-text">{{msg.content}}</text>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{dayGroups.length === 0}}" class="history__empty">暂无历史</view>
+      </view>
+    </view>
+  </view>
+</view>

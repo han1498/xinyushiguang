@@ -1,0 +1,57 @@
+<view class="page">
+  <view class="calendar-wrap">
+    <view class="calendar__bar">
+      <view class="calendar__btn" bindtap="onPrevMonth">‹</view>
+      <text class="calendar__title">{{monthTitle}}</text>
+      <view class="calendar__bar-right">
+        <view class="calendar__btn calendar__btn--sm" bindtap="onToggleCalendar">{{calendarVisible ? '▲' : '▼'}}</view>
+        <view class="calendar__btn" bindtap="onNextMonth">›</view>
+      </view>
+    </view>
+    <view wx:if="{{calendarVisible}}" class="calendar">
+      <view class="calendar__week">
+        <text wx:for="{{weekLabels}}" wx:key="*this" class="calendar__wk">{{item}}</text>
+      </view>
+      <view class="calendar__grid">
+        <view
+          wx:for="{{calendarCells}}"
+          wx:key="index"
+          class="calendar__cell {{item.inMonth ? '' : 'calendar__cell--dim'}} {{item.selected ? 'calendar__cell--selected' : ''}}"
+          data-date="{{item.date}}"
+          bindtap="onSelectDate"
+        >
+          <text class="calendar__day">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="todo-actions">
+    <view class="todo-add {{todoList.length >= maxTodoPerDay ? 'todo-add--disabled' : ''}}" bindtap="onTodoAdd">添加待办</view>
+    <text class="todo-date">{{selectedDate}}</text>
+  </view>
+
+  <view class="todo-list">
+    <view wx:for="{{todoList}}" wx:key="id" class="todo-row">
+      <view class="todo-edit" data-id="{{item.id}}" bindtap="onTodoEdit">
+        <text class="todo-edit-icon">✎</text>
+      </view>
+      <view class="todo-text-wrap">
+        <text class="todo-text {{item.done ? 'todo-text--done' : ''}}">{{item.content}}</text>
+        <text wx:if="{{item.duration === 'custom'}}" class="todo-badge">截止 {{item.expireDate}}</text>
+        <text wx:elif="{{item.duration === 'permanent'}}" class="todo-badge todo-badge--perm">永久</text>
+      </view>
+      <view class="todo-del" data-id="{{item.id}}" bindtap="onTodoDelete">删除</view>
+      <view class="todo-check {{item.done ? 'todo-check--done' : ''}}" data-id="{{item.id}}" bindtap="onTodoToggle"></view>
+    </view>
+    <view wx:if="{{todoList.length === 0}}" class="todo-empty">这一天还没有待办</view>
+  </view>
+
+  <view wx:if="{{praiseVisible}}" class="praise-mask" catchtap="onPraiseClose">
+    <view class="praise-card" catchtap="noop">
+      <text class="praise-emoji">🌿</text>
+      <text class="praise-text">{{praiseText}}</text>
+      <view class="praise-close" bindtap="onPraiseClose">开心～</view>
+    </view>
+  </view>
+</view>

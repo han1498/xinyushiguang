@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="plaza__bar">
+    <view class="plaza__btn {{publishing ? 'plaza__btn--disabled' : ''}}" bindtap="onPlazaAdd">发布动态</view>
+  </view>
+  <view class="plaza__list">
+    <view wx:for="{{posts}}" wx:key="id" class="post">
+      <view class="post__meta">{{item.timeText}}</view>
+      <view class="post__content">{{item.content}}</view>
+      <view wx:if="{{item.reply}}" class="post__reply">{{item.reply}}</view>
+      <view class="post__actions">
+        <view class="post__like {{item.liked ? 'post__like--on' : ''}}" data-id="{{item.id}}" bindtap="onPlazaToggleLike">{{item.liked ? '已赞' : '点赞'}}</view>
+        <view class="post__del" data-id="{{item.id}}" bindtap="onPlazaDelete">删除</view>
+      </view>
+    </view>
+    <view wx:if="{{posts.length === 0}}" class="plaza__empty">还没有动态</view>
+  </view>
+</view>

@@ -1,0 +1,67 @@
+<view class="stage">
+  <image wx:if="{{bgImage}}" class="bg-image" src="{{bgImage}}" mode="aspectFill" />
+  <view wx:if="{{splashVisible}}" class="splash {{splashFading ? 'splash--fade' : ''}}">
+    <view class="splash__content">
+      <image class="splash__img splash__img--spin" src="{{btn2Img}}" mode="aspectFit" />
+    </view>
+  </view>
+
+  <view class="mood-bar">
+    <view class="top-frame" style="{{topFrameImg ? ('background-image:url(' + topFrameImg + ');') : ''}}">
+      <text wx:if="{{topEmoji}}" class="top-frame__emoji">{{topEmoji}}</text>
+    </view>
+  </view> 
+
+  <view class="chat-area">
+    <scroll-view
+      class="chat-scroll"
+      scroll-y="true"
+      scroll-with-animation="true"
+      scroll-into-view="{{scrollIntoView}}"
+    >
+      <view wx:for="{{chatList}}" wx:key="id" id="{{item.id}}" class="chat-msg chat-msg--{{item.role}}">
+        <view class="message-bubble">
+          <rich-text nodes="{{item.nodes}}"></rich-text>
+        </view>
+        <view wx:if="{{item.role === 'assistant'}}" class="msg-edit" data-id="{{item.id}}" bindtap="onEditAiMessage">✎</view>
+      </view>
+      <view wx:if="{{sending}}" class="chat-msg chat-msg--assistant">
+        <view class="message-bubble message-bubble--loading">
+          <text class="loading-dots">...</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="chat-composer">
+      <input
+        class="chat-input"
+        value="{{inputText}}"
+        placeholder="写一句百合花语…"
+        bindinput="onInputChange"
+        confirm-type="send"
+        bindconfirm="sendMessage"
+      />
+      <view class="chat-send {{sending ? 'chat-send--disabled' : ''}}" bindtap="sendMessage">发送</view>
+    </view>
+  </view>
+
+  <view wx:if="{{editVisible}}" class="edit-mask" catchtap="onEditCancel">
+    <view class="edit-card" catchtap="noop">
+      <view class="edit-head">
+        <text class="edit-title">编辑回复</text>
+        <view class="edit-close" bindtap="onEditCancel">关闭</view>
+      </view>
+      <textarea
+        class="edit-textarea"
+        value="{{editText}}"
+        bindinput="onEditInput"
+        maxlength="-1"
+        placeholder="修改这段回复…"
+      ></textarea>
+      <view class="edit-actions">
+        <view class="edit-btn edit-btn--ghost" bindtap="onEditCancel">取消</view>
+        <view class="edit-btn" bindtap="onEditSave">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

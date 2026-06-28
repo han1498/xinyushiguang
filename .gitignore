@@ -1,0 +1,22 @@
+# 微信开发者工具
+project.private.config.json
+*.log
+
+# 旧页面备份
+pages/index_legacy/
+
+# TRAE 编辑器
+.trae/
+
+# Claude Skills (非项目代码)
+skills/
+skills.zip
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+node_modules/

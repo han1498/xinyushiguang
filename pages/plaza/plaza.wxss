@@ -1,0 +1,91 @@
+page {
+  background-color: #e7f2e7;
+  min-height: 100vh;
+}
+
+.page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.plaza__bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 0 10px;
+}
+
+.plaza__btn {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.18);
+  color: rgba(120, 146, 98, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plaza__btn--disabled {
+  opacity: 0.55;
+}
+
+.plaza__list {
+  margin-top: 8px;
+}
+
+.post {
+  padding: 12px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.post__meta {
+  font-size: 12px;
+  color: rgba(28, 54, 28, 0.55);
+  margin-bottom: 6px;
+}
+
+.post__content {
+  font-size: 14px;
+  color: rgba(28, 54, 28, 0.86);
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.post__reply {
+  padding: 10px 10px;
+  border-radius: 12px;
+  background: rgba(120, 146, 98, 0.10);
+  color: rgba(28, 54, 28, 0.82);
+  font-size: 13px;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.post__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post__like,
+.post__del {
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.10);
+  color: rgba(120, 146, 98, 0.96);
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.post__like--on {
+  background: rgba(120, 146, 98, 0.20);
+}
+
+.plaza__empty {
+  padding: 24px 8px;
+  text-align: center;
+  color: rgba(28, 54, 28, 0.55);
+  font-size: 12px;
+}

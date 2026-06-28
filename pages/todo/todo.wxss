@@ -1,0 +1,268 @@
+page {
+  background-color: #e7f2e7;
+  min-height: 100vh;
+}
+
+.page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.calendar-wrap {
+  margin-bottom: 12px;
+}
+
+.calendar {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.70);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.calendar__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.calendar__bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar__btn {
+  width: 44px;
+  height: 34px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.16);
+  color: rgba(120, 146, 98, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar__btn--sm {
+  width: 34px;
+  font-size: 12px;
+}
+
+.calendar__title {
+  color: rgba(28, 54, 28, 0.88);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.calendar__week {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-bottom: 6px;
+}
+
+.calendar__wk {
+  width: 14.2%;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(28, 54, 28, 0.55);
+}
+
+.calendar__grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calendar__cell {
+  width: 14.285%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.calendar__cell--dim {
+  opacity: 0.25;
+}
+
+.calendar__cell--selected {
+  background: rgba(120, 146, 98, 0.18);
+}
+
+.calendar__day {
+  color: rgba(28, 54, 28, 0.85);
+  font-size: 13px;
+}
+
+.todo-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 2px 6px;
+}
+
+.todo-add {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.18);
+  color: rgba(120, 146, 98, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-add--disabled {
+  opacity: 0.45;
+}
+
+.todo-date {
+  color: rgba(28, 54, 28, 0.70);
+  font-size: 12px;
+}
+
+.todo-list {
+  margin-top: 8px;
+}
+
+.todo-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.70);
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.todo-edit {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.todo-edit-icon {
+  color: rgba(120, 146, 98, 0.80);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.todo-text-wrap {
+  flex: 1;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.todo-text {
+  color: rgba(28, 54, 28, 0.86);
+  font-size: 14px;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.todo-text--done {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.todo-badge {
+  margin-top: 4px;
+  font-size: 11px;
+  color: rgba(28, 54, 28, 0.50);
+}
+
+.todo-badge--perm {
+  color: rgba(120, 146, 98, 0.60);
+}
+
+.todo-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  border: 2px solid rgba(120, 146, 98, 0.65);
+  box-sizing: border-box;
+  flex: none;
+  margin-left: 8px;
+}
+
+.todo-check--done {
+  background: rgba(120, 146, 98, 0.65);
+}
+
+.todo-del {
+  flex: none;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.10);
+  color: rgba(120, 146, 98, 0.96);
+  font-size: 12px;
+}
+
+.todo-empty {
+  padding: 24px 8px;
+  text-align: center;
+  color: rgba(28, 54, 28, 0.55);
+  font-size: 12px;
+}
+
+.praise-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12000;
+  background: rgba(0, 0, 0, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.praise-card {
+  width: 280px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 24px 24px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(36, 18, 52, 0.15);
+}
+
+.praise-emoji {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.praise-text {
+  color: rgba(28, 54, 28, 0.86);
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.praise-close {
+  margin-top: 20px;
+  height: 36px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  background: rgba(120, 146, 98, 0.18);
+  color: rgba(120, 146, 98, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}

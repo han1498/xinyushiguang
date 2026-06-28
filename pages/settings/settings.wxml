@@ -1,0 +1,42 @@
+<view class="page">
+  <view class="preset">
+    <view class="preset__section">
+      <view class="preset__title">AI设定</view>
+      <view class="field">
+        <text class="label">身份</text>
+        <input class="input" value="{{preset.identity}}" data-key="identity" bindinput="onPresetInput" placeholder="百合花精" />
+      </view>
+      <view class="field field--col">
+        <text class="label">能力边界</text>
+        <textarea class="textarea" value="{{preset.boundaries}}" data-key="boundaries" bindinput="onPresetInput" placeholder="不输出敏感信息" />
+      </view>
+    </view>
+
+    <view class="preset__section">
+      <view class="preset__title">提示词</view>
+      <view class="field field--col">
+        <textarea class="textarea" value="{{promptRules}}" bindinput="onPromptRulesInput" maxlength="{{maxPromptLength}}" placeholder="你是一只活了几百年的小花妖..." />
+        <text class="char-count">{{promptRules.length}}/{{maxPromptLength}}</text>
+      </view>
+      <view class="preset__tip">所有AI回复生成前将强制遵循这里的要求。</view>
+    </view>
+
+    <view class="preset__section">
+      <view class="preset__title">API配置</view>
+      <view class="field">
+        <text class="label">接口地址</text>
+        <input class="input" value="{{serverConfig.baseUrl}}" data-key="baseUrl" bindinput="onServerInput" placeholder="https://api.deepseek.com/v1/chat/completions" />
+      </view>
+      <view class="field field--col">
+        <text class="label">API密钥</text>
+        <input class="input" password="{{true}}" value="{{serverConfig.token}}" data-key="token" bindinput="onServerInput" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      </view>
+      <view class="preset__tip">整个程序将调用此API地址进行AI对话。密钥保存后不可查看。</view>
+    </view>
+
+    <view class="save {{saveState === 'saving' ? 'save--saving' : ''}} {{saveState === 'saved' ? 'save--saved' : ''}} {{saveState === 'error' ? 'save--error' : ''}}" bindtap="onSave">
+      <text class="save__text">保存配置</text>
+      <text class="save__state">{{saveState === 'saving' ? '…' : (saveState === 'saved' ? '✓' : (saveState === 'error' ? '✗' : ''))}}</text>
+    </view>
+  </view>
+</view>

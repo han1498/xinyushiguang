@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/chat/chat",
+    "pages/todo/todo",
+    "pages/plaza/plaza",
+    "pages/memo/memo",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#789262",
+    "navigationBarTitleText": "心语拾光",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "default",
+    "backgroundColor": "#e7f2e7"
+  },
+  "tabBar": {
+    "color": "#889988",
+    "selectedColor": "#789262",
+    "backgroundColor": "#f0f7f0",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "聊天"
+      },
+      {
+        "pagePath": "pages/todo/todo",
+        "text": "待办"
+      },
+      {
+        "pagePath": "pages/plaza/plaza",
+        "text": "广场"
+      },
+      {
+        "pagePath": "pages/memo/memo",
+        "text": "备忘"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
