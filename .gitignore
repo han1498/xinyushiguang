@@ -1,5 +1,6 @@
 # 微信开发者工具
 project.private.config.json
+project.config.json
 *.log
 
 # 旧页面备份
